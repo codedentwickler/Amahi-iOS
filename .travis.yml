@@ -3,6 +3,11 @@ osx_image: xcode9.3
 
 xcode_workspace: AmahiAnywhere/AmahiAnywhere.xcworkspace
 xcode_scheme: AmahiAnywhere
+xcode_sdk: iphonesimulator
+
+before_install:
+- brew update; brew update
+- brew outdated xctool || brew upgrade xctool
 
 # script:
 
