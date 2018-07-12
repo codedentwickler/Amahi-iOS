@@ -9,5 +9,5 @@
 import Foundation
 
 enum OfflineFileState: Int16 {
-    case downloaded = 1 , downloading, outdated, missing, none 
+    case downloaded = 1 , downloading, outdated, stopped, none 
 }

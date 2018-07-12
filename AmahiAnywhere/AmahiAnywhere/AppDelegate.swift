@@ -118,5 +118,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                           state: OfflineFileState.downloading,
                                           context: stack.context)
         }
-    }
+    }    
 }

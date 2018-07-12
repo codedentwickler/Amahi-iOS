@@ -20,6 +20,11 @@ extension OfflineFilesTableViewController {
         cell.downloadDateLabel?.text = offlineFile.downloadDate?.asString
         cell.progressView.setProgress(offlineFile.progress, animated: false)
         
+        let image = cell.brokenIndicatorImageView.image
+        let templateImage = image?.withRenderingMode(.alwaysTemplate)
+        cell.brokenIndicatorImageView.image = templateImage
+        cell.brokenIndicatorImageView.tintColor = UIColor.brokenIndicatorRed
+
         let tap = UITapGestureRecognizer(target: self, action: #selector(userClickMenu(sender:)))
         tap.cancelsTouchesInView = true
         cell.menuImageView.isUserInteractionEnabled = true
@@ -27,6 +32,19 @@ extension OfflineFilesTableViewController {
       
         if offlineFile.stateEnum != .downloading {
             cell.progressView.isHidden = true
+        } else {
+            let keyExists = DownloadService.shared.activeDownloads[offlineFile.remoteFileURL()] != nil
+            if !keyExists {
+                offlineFile.stateEnum = .stopped
+            }
+        }
+        
+        if offlineFile.stateEnum == .stopped {
+            cell.brokenIndicatorImageView.isHidden = false
+            cell.fileSizeLabel.isHidden = true
+        } else {
+            cell.brokenIndicatorImageView.isHidden = true
+            cell.fileSizeLabel.isHidden = false
         }
         
         debugPrint("Offline File State at index: \(indexPath.row) \(offlineFile.stateEnum) with progress \(offlineFile.progress)")

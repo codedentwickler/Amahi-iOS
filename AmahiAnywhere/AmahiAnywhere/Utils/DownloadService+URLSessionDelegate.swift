@@ -32,7 +32,7 @@ extension DownloadService: URLSessionDownloadDelegate {
 
         guard let sourceURL = downloadTask.originalRequest?.url else { return }
         guard let download = DownloadService.shared.activeDownloads[sourceURL] else { return }
-        DownloadService.shared.activeDownloads[sourceURL] = nil
+        activeDownloads[sourceURL] = nil
         
         let destinationURL = FileManager.default.localFilePathInDownloads(for: download.offlineFile)!
         debugPrint("DestinationURL::: \(destinationURL)")
@@ -43,11 +43,9 @@ extension DownloadService: URLSessionDownloadDelegate {
             try fileManager.moveItem(at: location, to: destinationURL)
             
             DispatchQueue.main.async {
-                let delegate = UIApplication.shared.delegate as! AppDelegate
-                let stack = delegate.stack
                 download.offlineFile.stateEnum = .downloaded
-                try? stack.context.save()
-                debugPrint("Download Has Saved for url \(downloadTask.originalRequest?.url!)")
+                let delegate = UIApplication.shared.delegate as! AppDelegate
+                try? delegate.stack.saveContext()
                 NotificationCenter.default.post(name: .DownloadCompletedSuccessfully, object: nil, userInfo: [:])
             }
             
@@ -62,22 +60,27 @@ extension DownloadService: URLSessionDownloadDelegate {
                     totalBytesExpectedToWrite: Int64) {
 
         guard let url = downloadTask.originalRequest?.url,
-            let download = DownloadService.shared.activeDownloads[url]  else { return }
+            let download = activeDownloads[url]  else { return }
 
         let progress = Float(totalBytesWritten) / Float(totalBytesExpectedToWrite)
         download.progress = progress
         
         DispatchQueue.main.async {
-            let delegate = UIApplication.shared.delegate as! AppDelegate
-            let stack = delegate.stack
             download.offlineFile.progress = progress
-            try? stack.context.save()
+            let delegate = UIApplication.shared.delegate as! AppDelegate
+            try? delegate.stack.saveContext()
         }
     }
     
     func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
-        debugPrint("Download completed: \(task), error: \(error?.localizedDescription ?? "")")
+        debugPrint("Download completed with error: \(task), error: \(error?.localizedDescription ?? "")")
+        if error == nil { return }
+        guard let url = task.originalRequest?.url,
+            let download = activeDownloads[url]  else { return }
         DispatchQueue.main.async {
+            download.offlineFile.stateEnum = .stopped
+            let delegate = UIApplication.shared.delegate as! AppDelegate
+            try? delegate.stack.saveContext()
             NotificationCenter.default.post(name: .DownloadCompletedWithError, object: nil, userInfo: [:])
         }
     }

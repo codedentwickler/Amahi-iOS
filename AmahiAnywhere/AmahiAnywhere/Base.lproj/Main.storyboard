@@ -699,13 +699,34 @@
                                                                     <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="right" horizontalHuggingPriority="251" verticalHuggingPriority="251" preservesSuperviewLayoutMargins="YES" text="File Size" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S1d-eT-Vpt">
-                                                                    <rect key="frame" x="286" y="0.0" width="44" height="30"/>
-                                                                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                                                    <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                    <nil key="highlightedColor"/>
-                                                                </label>
+                                                                <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2pr-Ga-vYO">
+                                                                    <rect key="frame" x="280" y="0.0" width="50" height="30"/>
+                                                                    <subviews>
+                                                                        <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_broken" translatesAutoresizingMaskIntoConstraints="NO" id="N76-3E-Qfl">
+                                                                            <rect key="frame" x="19" y="-5" width="28" height="28"/>
+                                                                        </imageView>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="right" horizontalHuggingPriority="251" verticalHuggingPriority="251" preservesSuperviewLayoutMargins="YES" text="File Size" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S1d-eT-Vpt">
+                                                                            <rect key="frame" x="3" y="-1" width="44" height="30"/>
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                                                            <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                        </label>
+                                                                    </subviews>
+                                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <constraints>
+                                                                        <constraint firstItem="S1d-eT-Vpt" firstAttribute="top" secondItem="N76-3E-Qfl" secondAttribute="top" constant="4" id="0Bf-0z-FLL"/>
+                                                                        <constraint firstItem="S1d-eT-Vpt" firstAttribute="centerX" secondItem="2pr-Ga-vYO" secondAttribute="centerX" id="ElO-gs-9n8"/>
+                                                                        <constraint firstItem="S1d-eT-Vpt" firstAttribute="top" secondItem="2pr-Ga-vYO" secondAttribute="top" constant="-1" id="ITV-ag-Ld3"/>
+                                                                        <constraint firstAttribute="bottom" secondItem="N76-3E-Qfl" secondAttribute="bottom" constant="7" id="IdG-mo-xxQ"/>
+                                                                        <constraint firstItem="S1d-eT-Vpt" firstAttribute="trailing" secondItem="N76-3E-Qfl" secondAttribute="trailing" id="hAf-9X-OAs"/>
+                                                                        <constraint firstItem="S1d-eT-Vpt" firstAttribute="centerY" secondItem="2pr-Ga-vYO" secondAttribute="centerY" constant="-1" id="o9c-1O-Blk"/>
+                                                                        <constraint firstItem="N76-3E-Qfl" firstAttribute="leading" secondItem="2pr-Ga-vYO" secondAttribute="leading" constant="19" id="uYC-Hc-JdO"/>
+                                                                    </constraints>
+                                                                </view>
                                                             </subviews>
+                                                            <constraints>
+                                                                <constraint firstItem="2pr-Ga-vYO" firstAttribute="leading" secondItem="OYV-eA-eaR" secondAttribute="leading" constant="280" id="D5E-5M-GJF"/>
+                                                            </constraints>
                                                         </stackView>
                                                     </subviews>
                                                     <constraints>
@@ -740,6 +761,7 @@
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
                                 <connections>
+                                    <outlet property="brokenIndicatorImageView" destination="N76-3E-Qfl" id="j8Y-iG-2WF"/>
                                     <outlet property="downloadDateLabel" destination="dQg-vo-D2y" id="mZC-Os-J2G"/>
                                     <outlet property="fileNameLabel" destination="KCX-9v-CPH" id="vLl-3W-N34"/>
                                     <outlet property="fileSizeLabel" destination="S1d-eT-Vpt" id="I0d-tZ-Aik"/>
@@ -763,5 +785,6 @@
         <image name="Amahi Logo White Font.png" width="719" height="246"/>
         <image name="hamburger-menu-icon" width="25" height="25"/>
         <image name="ic_more_vert" width="72" height="72"/>
+        <image name="icon_broken" width="28" height="28"/>
     </resources>
 </document>

@@ -27,4 +27,10 @@ extension UIColor {
             return UIColor(red:28/255, green:28/255, blue:31/255, alpha:1)
         }
     }
+    
+    class var brokenIndicatorRed : UIColor {
+        get {
+            return UIColor(red:67/255, green:22/255, blue:19/255, alpha:1)
+        }
+    }
 }
