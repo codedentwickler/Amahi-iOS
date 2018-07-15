@@ -89,21 +89,19 @@ public class Network {
             return (destinationFileUrl!, [.removePreviousFile, .createIntermediateDirectories])
         }
         
-        if let fileUrl = ServerApi.shared?.getFileUri(file) {
+        let fileUrl = ServerApi.shared!.getFileUri(file)
             
-            Alamofire.download(fileUrl, to: destination)
-                .downloadProgress { progress in
-                    progressCompletion(Float(progress.fractionCompleted))
-                }
-                .response { response in
-                
-                    if response.error == nil {
-                        completion(true)
-                    } else {
-                        completion(false)
-                    }
+        Alamofire.download(fileUrl, to: destination)
+            .downloadProgress { progress in
+                progressCompletion(Float(progress.fractionCompleted))
             }
-    
+            .response { response in
+            
+                if response.error == nil {
+                    completion(true)
+                } else {
+                    completion(false)
+                }
         }
     }
 }

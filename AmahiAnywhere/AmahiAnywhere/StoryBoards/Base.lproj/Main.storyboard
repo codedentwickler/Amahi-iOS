@@ -633,7 +633,7 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <searchBar contentMode="redraw" barStyle="black" searchBarStyle="minimal" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="XEa-9f-STT" userLabel="Search Bar">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="64"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
                                     <color key="barTintColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
                                     <textInputTraits key="textInputTraits" keyboardAppearance="alert" returnKeyType="search" enablesReturnKeyAutomatically="YES"/>
                                     <scopeButtonTitles>
@@ -658,8 +658,6 @@
                             </subviews>
                             <color key="backgroundColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
                             <constraints>
-                                <constraint firstAttribute="bottom" secondItem="lCg-gW-L7n" secondAttribute="bottom" constant="4" id="2ot-XH-6en"/>
-                                <constraint firstItem="lCg-gW-L7n" firstAttribute="top" secondItem="XEa-9f-STT" secondAttribute="bottom" id="62w-Og-ijr"/>
                                 <constraint firstItem="lCg-gW-L7n" firstAttribute="centerX" secondItem="HC7-GE-8gU" secondAttribute="centerX" id="9gB-WJ-Hmq"/>
                                 <constraint firstItem="XEa-9f-STT" firstAttribute="width" secondItem="HC7-GE-8gU" secondAttribute="width" id="S2c-NS-jER"/>
                                 <constraint firstItem="XEa-9f-STT" firstAttribute="top" secondItem="HC7-GE-8gU" secondAttribute="top" id="bVD-89-INI"/>
@@ -703,10 +701,14 @@
                                                                     <rect key="frame" x="280" y="0.0" width="50" height="30"/>
                                                                     <subviews>
                                                                         <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_broken" translatesAutoresizingMaskIntoConstraints="NO" id="N76-3E-Qfl">
-                                                                            <rect key="frame" x="19" y="-5" width="28" height="28"/>
+                                                                            <rect key="frame" x="19" y="1" width="22" height="22"/>
+                                                                            <constraints>
+                                                                                <constraint firstAttribute="width" constant="22" id="1kZ-wg-sbv"/>
+                                                                                <constraint firstAttribute="height" constant="22" id="tz4-o7-Eix"/>
+                                                                            </constraints>
                                                                         </imageView>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="right" horizontalHuggingPriority="251" verticalHuggingPriority="251" preservesSuperviewLayoutMargins="YES" text="File Size" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S1d-eT-Vpt">
-                                                                            <rect key="frame" x="3" y="-1" width="44" height="30"/>
+                                                                            <rect key="frame" x="-9" y="5" width="50" height="18"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                                             <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <nil key="highlightedColor"/>
@@ -715,17 +717,21 @@
                                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <constraints>
                                                                         <constraint firstItem="S1d-eT-Vpt" firstAttribute="top" secondItem="N76-3E-Qfl" secondAttribute="top" constant="4" id="0Bf-0z-FLL"/>
-                                                                        <constraint firstItem="S1d-eT-Vpt" firstAttribute="centerX" secondItem="2pr-Ga-vYO" secondAttribute="centerX" id="ElO-gs-9n8"/>
-                                                                        <constraint firstItem="S1d-eT-Vpt" firstAttribute="top" secondItem="2pr-Ga-vYO" secondAttribute="top" constant="-1" id="ITV-ag-Ld3"/>
+                                                                        <constraint firstItem="S1d-eT-Vpt" firstAttribute="leading" secondItem="2pr-Ga-vYO" secondAttribute="leading" constant="-9" id="HzQ-zE-i9m"/>
                                                                         <constraint firstAttribute="bottom" secondItem="N76-3E-Qfl" secondAttribute="bottom" constant="7" id="IdG-mo-xxQ"/>
-                                                                        <constraint firstItem="S1d-eT-Vpt" firstAttribute="trailing" secondItem="N76-3E-Qfl" secondAttribute="trailing" id="hAf-9X-OAs"/>
+                                                                        <constraint firstItem="S1d-eT-Vpt" firstAttribute="width" secondItem="2pr-Ga-vYO" secondAttribute="width" id="Rvf-d1-qxJ"/>
+                                                                        <constraint firstItem="S1d-eT-Vpt" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="N76-3E-Qfl" secondAttribute="trailing" id="hAf-9X-OAs"/>
                                                                         <constraint firstItem="S1d-eT-Vpt" firstAttribute="centerY" secondItem="2pr-Ga-vYO" secondAttribute="centerY" constant="-1" id="o9c-1O-Blk"/>
                                                                         <constraint firstItem="N76-3E-Qfl" firstAttribute="leading" secondItem="2pr-Ga-vYO" secondAttribute="leading" constant="19" id="uYC-Hc-JdO"/>
+                                                                        <constraint firstAttribute="trailing" secondItem="N76-3E-Qfl" secondAttribute="trailing" constant="9" id="x9d-4g-rbH"/>
+                                                                        <constraint firstAttribute="width" constant="50" id="yIQ-Ka-hHL"/>
                                                                     </constraints>
                                                                 </view>
                                                             </subviews>
                                                             <constraints>
                                                                 <constraint firstItem="2pr-Ga-vYO" firstAttribute="leading" secondItem="OYV-eA-eaR" secondAttribute="leading" constant="280" id="D5E-5M-GJF"/>
+                                                                <constraint firstAttribute="trailing" secondItem="2pr-Ga-vYO" secondAttribute="trailing" id="FWv-Gf-rrt"/>
+                                                                <constraint firstAttribute="trailing" secondItem="2pr-Ga-vYO" secondAttribute="trailing" id="PeG-GW-tWh"/>
                                                             </constraints>
                                                         </stackView>
                                                     </subviews>

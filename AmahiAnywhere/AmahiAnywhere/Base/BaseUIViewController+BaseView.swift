@@ -67,7 +67,7 @@ extension BaseUITableViewController: BaseView {
 
 extension UIViewController {
     
-    func updateNavigationBarBackground() {
+    @objc func updateNavigationBarBackgroundAccordingToCurrentConnectionMode() {
         var connectionMode = ConnectionMode.remote
         
         if ConnectionModeManager.shared.isLocalInUse() {
@@ -77,7 +77,6 @@ extension UIViewController {
         if LocalStorage.shared.userConnectionPreference != .auto {
             connectionMode = LocalStorage.shared.userConnectionPreference
         }
-        
         let color = connectionMode == .remote ? UIColor.remoteIndicatorBrown : UIColor.localIndicatorBlack
         self.navigationController?.navigationBar.backgroundColor = color
     }
@@ -136,7 +135,7 @@ extension UIViewController {
         }
     }
     
-    func addActiveDownloadObserver() {
+    func addActiveDownloadObservers() {
         
         NotificationCenter.default.addObserver(self, selector: #selector(updateDownloadsIconOnDownloadStarted),
                                                name: .DownloadStarted, object: nil)
@@ -149,6 +148,15 @@ extension UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(updateDownloadsIconOnDownloadCompleted),
                                                name: .DownloadCancelled, object: nil)
+    }
+    
+    func addLanTestObservers() {
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(updateNavigationBarBackgroundAccordingToCurrentConnectionMode),
+                                               name: .LanTestPassed, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(updateNavigationBarBackgroundAccordingToCurrentConnectionMode),
+                                               name: .LanTestFailed, object: nil)
     }
     
     class var storyboardID : String {

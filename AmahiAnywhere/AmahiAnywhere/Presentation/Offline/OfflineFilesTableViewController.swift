@@ -76,7 +76,7 @@ class OfflineFilesTableViewController : CoreDataTableViewController {
                 }
                 actions.append(delete)
                 actions.append(share)
-            } else if state == .stopped {
+            } else if state == .completedWithError {
                 actions.append(delete)
             } else if state == .downloading {
                 actions.append(stop)

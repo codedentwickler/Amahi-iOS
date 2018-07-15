@@ -35,11 +35,11 @@ extension OfflineFilesTableViewController {
         } else {
             let keyExists = DownloadService.shared.activeDownloads[offlineFile.remoteFileURL()] != nil
             if !keyExists {
-                offlineFile.stateEnum = .stopped
+                offlineFile.stateEnum = .completedWithError
             }
         }
         
-        if offlineFile.stateEnum == .stopped {
+        if offlineFile.stateEnum == .completedWithError {
             cell.brokenIndicatorImageView.isHidden = false
             cell.fileSizeLabel.isHidden = true
         } else {
@@ -81,7 +81,13 @@ extension OfflineFilesTableViewController {
             self.shareFile(at: url, from: tableView.cellForRow(at: indexPath))
         }
         share.backgroundColor = UIColor.blue
-        return [share, delete]
+        
+        var actions = [UITableViewRowAction]()
+        if offlineFile.stateEnum == .downloaded {
+            actions.append(share)
+        }
+        actions.append(delete)
+        return actions
     }
     
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

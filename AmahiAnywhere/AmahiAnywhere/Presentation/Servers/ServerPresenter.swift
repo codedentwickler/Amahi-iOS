@@ -27,6 +27,8 @@ class ServerPresenter: BasePresenter {
     
     func fetchServers() {
         
+        ServerApi.destroySharedManager()
+        
         self.view?.updateRefreshing(isRefreshing: true)
         
         // cleanup temp files in background

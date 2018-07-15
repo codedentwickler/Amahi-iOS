@@ -321,6 +321,16 @@
 			path = Settings;
 			sourceTree = "<group>";
 		};
+		C8B70E1120FA937600873B3F /* StoryBoards */ = {
+			isa = PBXGroup;
+			children = (
+				FB71BEA0201CB2FC0005492C /* LaunchScreen.storyboard */,
+				C8490D1420C847F90052D636 /* VideoPlayer.storyboard */,
+				FB71BE9B201CB2FC0005492C /* Main.storyboard */,
+			);
+			path = StoryBoards;
+			sourceTree = "<group>";
+		};
 		C8CE05C6206B1F3B006F6807 /* Servers */ = {
 			isa = PBXGroup;
 			children = (
@@ -399,6 +409,7 @@
 		FB71BE96201CB2FC0005492C /* AmahiAnywhere */ = {
 			isa = PBXGroup;
 			children = (
+				C8B70E1120FA937600873B3F /* StoryBoards */,
 				C8DA5B2120D5E0C600F5A527 /* Cells */,
 				C878C97A205DF3DE0039C23A /* Extensions */,
 				C83C639A2039921B0089B9D8 /* Presentation */,
@@ -406,13 +417,10 @@
 				C83C636F20386DD90089B9D8 /* Base */,
 				C83C63782038D5150089B9D8 /* Utils */,
 				FB71BE97201CB2FC0005492C /* AppDelegate.swift */,
-				FB71BE9B201CB2FC0005492C /* Main.storyboard */,
 				FB71BE9E201CB2FC0005492C /* Assets.xcassets */,
 				0AA5E184203F36DD0010FD47 /* Amahi Logo White Font.png */,
-				FB71BEA0201CB2FC0005492C /* LaunchScreen.storyboard */,
 				FB71BEA3201CB2FC0005492C /* Info.plist */,
 				C866E5532042373D0083A606 /* AmahiAnywhere-Bridging-Header.h */,
-				C8490D1420C847F90052D636 /* VideoPlayer.storyboard */,
 			);
 			path = AmahiAnywhere;
 			sourceTree = "<group>";

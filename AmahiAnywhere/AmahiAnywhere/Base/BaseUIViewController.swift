@@ -14,8 +14,9 @@ class BaseUIViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        updateNavigationBarBackground()
-        addActiveDownloadObserver()
+        updateNavigationBarBackgroundAccordingToCurrentConnectionMode()
+        addActiveDownloadObservers()
+        addLanTestObservers()
     }
     
     override func viewWillDisappear(_ animated: Bool) {

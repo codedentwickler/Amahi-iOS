@@ -18,6 +18,7 @@ class SharesTableViewController: BaseUITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        showDownloadsIconIfOfflineFileExists()
         
         presenter = SharesPresenter(self)
         self.refreshControl?.addTarget(self, action: #selector(handleRefresh), for: UIControlEvents.valueChanged)
@@ -32,14 +33,13 @@ class SharesTableViewController: BaseUITableViewController {
     }
     
     @objc func handleRefresh(sender: UIRefreshControl) {
-        updateNavigationBarBackground()
         presenter.getShares()
     }
 
     // MARK: - Table view data source
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return ServerApi.shared?.getServer()?.name
+        return ServerApi.shared!.getServer()?.name
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

@@ -78,7 +78,7 @@ extension DownloadService: URLSessionDownloadDelegate {
         guard let url = task.originalRequest?.url,
             let download = activeDownloads[url]  else { return }
         DispatchQueue.main.async {
-            download.offlineFile.stateEnum = .stopped
+            download.offlineFile.stateEnum = .completedWithError
             let delegate = UIApplication.shared.delegate as! AppDelegate
             try? delegate.stack.saveContext()
             NotificationCenter.default.post(name: .DownloadCompletedWithError, object: nil, userInfo: [:])

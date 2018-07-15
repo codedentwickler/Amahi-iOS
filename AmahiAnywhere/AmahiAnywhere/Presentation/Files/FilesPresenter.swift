@@ -53,7 +53,7 @@ internal class FilesPresenter: BasePresenter {
         
         self.view?.updateRefreshing(isRefreshing: true)
         
-        ServerApi.shared?.getFiles(share: share, directory: directory) { (serverFilesResponse) in
+        ServerApi.shared!.getFiles(share: share, directory: directory) { (serverFilesResponse) in
             
             self.view?.updateRefreshing(isRefreshing: false)
             

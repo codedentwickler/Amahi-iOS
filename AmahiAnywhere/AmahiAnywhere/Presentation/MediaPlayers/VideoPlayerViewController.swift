@@ -32,7 +32,7 @@ class VideoPlayerViewController: UIViewController {
     private var hasMediaFileParseFinished = false
     private var hasPlayStarted = false
     
-    fileprivate let JUMP_INTERVAL: Int32 = 15
+    fileprivate static let IntervalForFastRewindAndFastForward: Int32 = 15
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,12 +44,11 @@ class VideoPlayerViewController: UIViewController {
         
         UIApplication.shared.statusBarStyle = .lightContent
         
-        for view in rootView.subviews {
-            let gesture = UITapGestureRecognizer(target: self, action:  #selector(userTouchScreen))
-            gesture.delegate = self
-            gesture.cancelsTouchesInView = false
-            view.addGestureRecognizer(gesture)
-        }
+        let gesture = UITapGestureRecognizer(target: self, action:  #selector(userTouchScreen))
+        gesture.delegate = self
+        gesture.cancelsTouchesInView = false
+        movieView.addGestureRecognizer(gesture)
+
         listenForNotifications()
         self.setUpIndicatorLayers(imageView: rewindIndicator)
         self.setUpIndicatorLayers(imageView: forwardIndicator)
@@ -163,6 +162,14 @@ class VideoPlayerViewController: UIViewController {
     }
     
     @objc func userTouchScreen() {
+                
+        if !videoControlsView.isHidden {
+            videoControlsView.isHidden = true
+            doneButton.isHidden = true
+            videoControlsView.alpha = 0
+            doneButton.alpha = 0
+            return
+        }
         
         videoControlsView.layer.removeAllAnimations()
         doneButton.layer.removeAllAnimations()
@@ -183,12 +190,12 @@ class VideoPlayerViewController: UIViewController {
     }
     
     @IBAction func rewind(_ sender: Any) {
-        mediaPlayer?.jumpBackward(JUMP_INTERVAL)
+        mediaPlayer?.jumpBackward(VideoPlayerViewController.IntervalForFastRewindAndFastForward)
         self.showIndicator(imageView: rewindIndicator)
     }
     
     @IBAction func forward(_ sender: Any) {
-        mediaPlayer?.jumpForward(JUMP_INTERVAL)
+        mediaPlayer?.jumpForward(VideoPlayerViewController.IntervalForFastRewindAndFastForward)
         self.showIndicator(imageView: forwardIndicator)
     }
     
@@ -254,7 +261,6 @@ class VideoPlayerViewController: UIViewController {
         self.idleTimer?.invalidate()
         self.idleTimer = nil
     }
-    
 }
 
 // Mark - VLC Media Player Delegates
