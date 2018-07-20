@@ -18,7 +18,6 @@ class SharesTableViewController: BaseUITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        showDownloadsIconIfOfflineFileExists()
         
         presenter = SharesPresenter(self)
         self.refreshControl?.addTarget(self, action: #selector(handleRefresh), for: UIControlEvents.valueChanged)

@@ -17,9 +17,7 @@ class ServerViewController: BaseUITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        showDownloadsIconIfOfflineFileExists()
-        
+                
         presenter = ServerPresenter(self)
         presenter.fetchServers()
         self.refreshControl?.addTarget(self, action: #selector(handleRefresh), for: UIControlEvents.valueChanged)

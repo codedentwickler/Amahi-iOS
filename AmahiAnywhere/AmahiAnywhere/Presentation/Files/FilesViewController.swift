@@ -33,7 +33,6 @@ class FilesViewController: BaseUIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        showDownloadsIconIfOfflineFileExists()
 
         presenter = FilesPresenter(self)
         

@@ -122,9 +122,11 @@ extension UIViewController {
         }
         
         if DownloadService.shared.activeDownloads.isEmpty {
-            navigationItem.rightBarButtonItem?.tintColor = UIColor.white
+            navigationController?.viewControllers.forEach({ (controller) in                    controller.navigationItem.rightBarButtonItem?.tintColor = UIColor.white
+            })
         } else {
-            navigationItem.rightBarButtonItem?.tintColor = UIColor.softYellow
+            navigationController?.viewControllers.forEach({ (controller) in                    controller.navigationItem.rightBarButtonItem?.tintColor = UIColor.softYellow
+            })
         }
     }
     
