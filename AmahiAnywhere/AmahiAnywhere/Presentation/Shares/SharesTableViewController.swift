@@ -32,6 +32,12 @@ class SharesTableViewController: BaseUITableViewController {
         showDownloadsIconIfOfflineFileExists()
     }
     
+    override func updateNavigationBarBackgroundWhenLanTestFailed() {
+        super.updateNavigationBarBackgroundWhenLanTestFailed()
+        
+        presenter.getShares()
+    }
+    
     @objc func handleRefresh(sender: UIRefreshControl) {
         presenter.getShares()
     }

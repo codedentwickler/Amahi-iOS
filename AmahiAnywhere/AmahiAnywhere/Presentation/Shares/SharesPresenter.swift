@@ -32,7 +32,6 @@ class SharesPresenter: BasePresenter {
         ServerApi.shared!.loadServerRoute() { (isLoadSuccessful) in
             if !isLoadSuccessful {
                 self.view?.updateRefreshing(isRefreshing: false)
-                self.view?.showError(message: StringLiterals.GENERIC_NETWORK_ERROR)
                 return
             }
             self.getShares()
@@ -48,7 +47,6 @@ class SharesPresenter: BasePresenter {
             self.view?.updateRefreshing(isRefreshing: false)
             
             guard let serverShares = serverSharesResponse else {
-                self.view?.showError(message: StringLiterals.GENERIC_NETWORK_ERROR)
                 return
             }
             

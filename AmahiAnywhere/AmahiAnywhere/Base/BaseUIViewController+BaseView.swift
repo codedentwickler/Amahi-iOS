@@ -68,17 +68,20 @@ extension BaseUITableViewController: BaseView {
 extension UIViewController {
     
     @objc func updateNavigationBarBackgroundAccordingToCurrentConnectionMode() {
-        var connectionMode = ConnectionMode.remote
-        
-        if ConnectionModeManager.shared.isLocalInUse() {
-            connectionMode = ConnectionMode.local
-        }
-        
         if LocalStorage.shared.userConnectionPreference != .auto {
-            connectionMode = LocalStorage.shared.userConnectionPreference
+            let connectionMode = LocalStorage.shared.userConnectionPreference
+            let color = connectionMode == .remote ? UIColor.remoteIndicatorBrown : UIColor.localIndicatorBlack
+            self.navigationController?.navigationBar.backgroundColor = color
+
         }
-        let color = connectionMode == .remote ? UIColor.remoteIndicatorBrown : UIColor.localIndicatorBlack
-        self.navigationController?.navigationBar.backgroundColor = color
+    }
+    
+    @objc func updateNavigationBarBackgroundWhenLanTestPassed() {
+        self.navigationController?.navigationBar.backgroundColor = UIColor.localIndicatorBlack
+    }
+    
+    @objc func updateNavigationBarBackgroundWhenLanTestFailed() {
+        self.navigationController?.navigationBar.backgroundColor = UIColor.remoteIndicatorBrown
     }
     
     func showDownloadsIconIfOfflineFileExists() {
@@ -152,10 +155,10 @@ extension UIViewController {
     
     func addLanTestObservers() {
         
-        NotificationCenter.default.addObserver(self, selector: #selector(updateNavigationBarBackgroundAccordingToCurrentConnectionMode),
+        NotificationCenter.default.addObserver(self, selector: #selector(updateNavigationBarBackgroundWhenLanTestPassed),
                                                name: .LanTestPassed, object: nil)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(updateNavigationBarBackgroundAccordingToCurrentConnectionMode),
+        NotificationCenter.default.addObserver(self, selector: #selector(updateNavigationBarBackgroundWhenLanTestFailed),
                                                name: .LanTestFailed, object: nil)
     }
     
