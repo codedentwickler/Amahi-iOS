@@ -9,6 +9,7 @@
 import UIKit
 import IQKeyboardManagerSwift
 import EVReflection
+import AVFoundation
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -39,6 +40,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         dateFormatter.dateFormat = "E, d MMM yyyy HH:mm:ss Z"
         EVReflection.setDateFormatter(dateFormatter)
         
+        // Setup Audio Session For Background Play
+        let audioSession = AVAudioSession.sharedInstance()
+        do {
+            try audioSession.setCategory(AVAudioSessionCategoryPlayback)
+            try AVAudioSession.sharedInstance().setActive(true)
+        } catch {
+            debugPrint("Setting category to AVAudioSessionCategoryPlayback failed.")
+        }
+        application.beginReceivingRemoteControlEvents()
+
         // Remove previous data in core data and delete all files in download folders.
 //        removeAllDataFromDownloadsAndCoreData()
         

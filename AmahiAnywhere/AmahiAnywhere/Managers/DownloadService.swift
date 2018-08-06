@@ -6,7 +6,6 @@
 //  Copyright © 2018 Amahi. All rights reserved.
 //
 
-
 import Foundation
 
 // Downloads server file, and stores in local file.

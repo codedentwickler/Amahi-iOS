@@ -9,6 +9,8 @@
 import Foundation
 import Lightbox
 import CoreData
+import KDEAudioPlayer
+import AVFoundation
 
 internal protocol FilesView : BaseView {
     func initFiles(_ files: [ServerFile])
@@ -20,6 +22,8 @@ internal protocol FilesView : BaseView {
     func present(_ controller: UIViewController)
     
     func playMedia(at url: URL)
+    
+    func playAudio(_ items: [AVPlayerItem], startIndex: Int)
     
     func webViewOpenContent(at url: URL, mimeType: MimeType)
     
@@ -106,11 +110,32 @@ internal class FilesPresenter: BasePresenter {
             self.view?.present(controller)
             break
             
-        case MimeType.video, MimeType.audio:
+        case MimeType.video:
             // TODO: open VideoPlayer and play the file
             let url = ServerApi.shared!.getFileUri(file)
             self.view?.playMedia(at: url)
-            return
+            break
+            
+        case MimeType.audio:
+            let audioURLs = prepareAudioItems(files)
+            var arrangedURLs = [URL]()
+                
+            for (index, url) in audioURLs.enumerated() {
+                if (index < fileIndex) {
+                    arrangedURLs.insert(url, at: arrangedURLs.endIndex)
+                } else {
+                    arrangedURLs.insert(url, at: index - fileIndex)
+                }
+            }
+            
+            var playerItems = [AVPlayerItem]()
+            
+            for _ in 0..<6 {
+                arrangedURLs.forEach({playerItems.append(AVPlayerItem(url: $0))})
+            }
+            
+            self.view?.playAudio(playerItems, startIndex: fileIndex)
+            break
             
         case MimeType.code, MimeType.presentation, MimeType.sharedFile, MimeType.document, MimeType.spreadsheet:
             if FileManager.default.fileExistsInCache(file){
@@ -216,6 +241,31 @@ internal class FilesPresenter: BasePresenter {
         return images
     }
     
+//    private func prepareAudioItems(_ files: [ServerFile]) -> [AVPlayerItem] {
+//        var audioItems = [AVPlayerItem]()
+//
+//        for file in files {
+//            if (Mimes.shared.match(file.mime_type!) == MimeType.audio) {
+//                let url = ServerApi.shared!.getFileUri(file)
+//                let item = AVPlayerItem(url: url)
+//                audioItems.append(item)
+//            }
+//        }
+//        return audioItems
+//    }
+//
+    private func prepareAudioItems(_ files: [ServerFile]) -> [URL] {
+        var audioURLs = [URL]()
+        
+        for file in files {
+            if (Mimes.shared.match(file.mime_type!) == MimeType.audio) {
+                let url = ServerApi.shared!.getFileUri(file)
+                audioURLs.append(url)
+            }
+        }
+        return audioURLs
+    }
+    
     func loadOfflineFiles() {
         
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "OfflineFile")
@@ -225,8 +275,8 @@ internal class FilesPresenter: BasePresenter {
         let stack = delegate.stack
                 
         fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
-                                                                  managedObjectContext: stack.context,
-                                                                  sectionNameKeyPath: nil, cacheName: nil)
+                                                              managedObjectContext: stack.context,
+                                                              sectionNameKeyPath: nil, cacheName: nil)
         if let files = fetchedResultsController?.fetchedObjects as! [OfflineFile]? {
      
             var dictionary = [String : OfflineFile]()

@@ -89,7 +89,7 @@ extension UIViewController {
         let stack = delegate.stack
         
         if !stack.isDownloadsEmpty {
-            let rightButton = UIBarButtonItem(image: UIImage(named: "icon_cell_phone"),
+            let rightButton = UIBarButtonItem(image: UIImage(named: "cellphoneIcon"),
                                               style: .plain, target: self,
                                               action: #selector(userClickedDownloadsIcon))
             
@@ -115,7 +115,7 @@ extension UIViewController {
         debugPrint("Active Downloads count \(DownloadService.shared.activeDownloads.count)")
         
         if navigationItem.rightBarButtonItem == nil {
-            let rightButton = UIBarButtonItem(image: UIImage(named: "icon_cell_phone"),
+            let rightButton = UIBarButtonItem(image: UIImage(named: "cellphoneIcon"),
                                               style: .plain, target: self,
                                               action: #selector(userClickedDownloadsIcon))
             navigationItem.rightBarButtonItem = rightButton

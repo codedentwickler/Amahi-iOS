@@ -163,6 +163,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0479B103210E0FB70052489F /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				C8DEBFAA20BAE1D200B09AED /* ConnectionModeManager.swift */,
+				C8DA5B1920D5DC2200F5A527 /* DownloadService.swift */,
+				C8DA5B2C20D7282E00F5A527 /* DownloadService+URLSessionDelegate.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
 		C446600BA8E0E01249C2486F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -188,9 +198,6 @@
 				C83C637B2038D5150089B9D8 /* StringIdentifiers.swift */,
 				46098D092050114C00752EB6 /* Network.swift */,
 				4612851D2051DB770061EC21 /* Mimes.swift */,
-				C8DEBFAA20BAE1D200B09AED /* ConnectionModeManager.swift */,
-				C8DA5B1920D5DC2200F5A527 /* DownloadService.swift */,
-				C8DA5B2C20D7282E00F5A527 /* DownloadService+URLSessionDelegate.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -409,6 +416,7 @@
 		FB71BE96201CB2FC0005492C /* AmahiAnywhere */ = {
 			isa = PBXGroup;
 			children = (
+				0479B103210E0FB70052489F /* Managers */,
 				C8B70E1120FA937600873B3F /* StoryBoards */,
 				C8DA5B2120D5E0C600F5A527 /* Cells */,
 				C878C97A205DF3DE0039C23A /* Extensions */,
@@ -533,6 +541,7 @@
 				"${BUILT_PRODUCTS_DIR}/Hue/Hue.framework",
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Imaginary/Imaginary.framework",
+				"${BUILT_PRODUCTS_DIR}/KDEAudioPlayer/KDEAudioPlayer.framework",
 				"${BUILT_PRODUCTS_DIR}/Lightbox/Lightbox.framework",
 				"${BUILT_PRODUCTS_DIR}/MBProgressHUD/MBProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
@@ -546,6 +555,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hue.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Imaginary.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KDEAudioPlayer.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Lightbox.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MBProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
@@ -705,6 +715,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_COMPILATION_MODE = singlefile;
+				SWIFT_ENFORCE_EXCLUSIVE_ACCESS = full;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -757,6 +768,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_ENFORCE_EXCLUSIVE_ACCESS = full;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -777,6 +789,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.amahi.AmahiAnywhere-dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ENFORCE_EXCLUSIVE_ACCESS = none;
 				SWIFT_OBJC_BRIDGING_HEADER = "AmahiAnywhere/AmahiAnywhere-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -798,6 +811,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.amahi.AmahiAnywhere-dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ENFORCE_EXCLUSIVE_ACCESS = none;
 				SWIFT_OBJC_BRIDGING_HEADER = "AmahiAnywhere/AmahiAnywhere-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

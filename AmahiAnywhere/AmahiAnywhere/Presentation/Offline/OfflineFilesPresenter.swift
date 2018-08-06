@@ -8,6 +8,7 @@
 
 import Foundation
 import Lightbox
+import KDEAudioPlayer
 
 protocol OfflineFilesView : BaseView {    
     func present(_ controller: UIViewController)
@@ -55,10 +56,14 @@ class OfflineFilesPresenter: BasePresenter {
             self.view?.present(controller)
             break
             
-        case MimeType.video, MimeType.audio:
-            // TODO: open VideoPlayer and play the file
+        case MimeType.video:
              self.view?.playMedia(at: url)
-            return
+            break
+            
+        case MimeType.audio:
+            let player = AudioPlayer()
+            player.play(items: prepareAudioItems(files), startAtIndex: fileIndex)
+            break
             
         case MimeType.code, MimeType.presentation, MimeType.sharedFile, MimeType.document, MimeType.spreadsheet:
             if type == MimeType.sharedFile {
@@ -72,6 +77,20 @@ class OfflineFilesPresenter: BasePresenter {
             // TODO: show list of apps that can open the file
             return
         }
+    }
+    
+    private func prepareAudioItems(_ files: [OfflineFile]) -> [AudioItem] {
+        var audioItems = [AudioItem]()
+        
+        for file in files {
+            if (Mimes.shared.match(file.mime!) == MimeType.audio) {
+                let url = FileManager.default.localFilePathInDownloads(for: file)!
+                if let item = AudioItem(highQualitySoundURL: nil, mediumQualitySoundURL: url, lowQualitySoundURL: nil) {
+                    audioItems.append(item)
+                }
+            }
+        }
+        return audioItems
     }
     
     private func prepareImageArray(_ files: [OfflineFile]) -> [LightboxImage] {

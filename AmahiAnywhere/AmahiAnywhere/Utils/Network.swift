@@ -10,7 +10,6 @@ import Foundation
 import Alamofire
 import EVReflection
 
-
 public class Network {
     
     private init(){}

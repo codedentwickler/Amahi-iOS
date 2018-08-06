@@ -6,7 +6,9 @@
 //  Copyright © 2018 Amahi. All rights reserved.
 //
 
+import AVKit
 import Foundation
+import MediaPlayer
 
 // MARK: Files View implementations
 
@@ -56,9 +58,97 @@ extension FilesViewController: FilesView {
     }
     
     func playMedia(at url: URL) {
-        let videoPlayerVc = self.viewController(viewControllerClass: VideoPlayerViewController.self, from: StoryBoardIdentifiers.VIDEO_PLAYER)
+        let videoPlayerVc = self.viewController(viewControllerClass: VideoPlayerViewController.self,
+                                                from: StoryBoardIdentifiers.VIDEO_PLAYER)
         videoPlayerVc.mediaURL = url
         self.present(videoPlayerVc)
+    }
+    
+    func playAudio(_ items: [AVPlayerItem], startIndex: Int) {
+        
+        let avPlayerVC = AVPlayerViewController()
+        player = AVQueuePlayer(items: items)
+        player.actionAtItemEnd = .advance
+        avPlayerVC.player = player
+        
+        for item in items {
+            NotificationCenter.default.addObserver(self,
+                                                   selector: #selector(FilesViewController.nextAudio(notification:)),
+                                                   name: .AVPlayerItemDidPlayToEndTime, object: item)
+        }
+        
+        present(avPlayerVC, animated: true) {
+            self.player.play()
+        }
+    }
+    
+    func setNowPlayingInfo() {
+        // Get Now Playing information and set it appropriately
+        let nowPlayingInfoCenter = MPNowPlayingInfoCenter.default()
+        var nowPlayingInfo = nowPlayingInfoCenter.nowPlayingInfo ?? [String: Any]()
+        
+        let title = "title"
+        let album = "album"
+        let artworkData = Data()
+        let image = UIImage(data: artworkData) ?? UIImage()
+        let artwork = MPMediaItemArtwork(boundsSize: image.size, requestHandler: {  (_) -> UIImage in
+            return image
+        })
+        
+        nowPlayingInfo[MPMediaItemPropertyTitle] = title
+        nowPlayingInfo[MPMediaItemPropertyAlbumTitle] = album
+        nowPlayingInfo[MPMediaItemPropertyArtwork] = artwork
+        
+        nowPlayingInfoCenter.nowPlayingInfo = nowPlayingInfo
+    }
+    
+    @objc func nextAudio(notification: Notification) {
+        debugPrint("nextAudio was called")
+        guard player != nil else { return }
+        debugPrint("AVPlayerItemDidPlayToEndTime notif info  \(notification.userInfo)")
+        //        if let currentItem = player.currentItem {
+        if let currentItem = notification.userInfo!["object"] as? AVPlayerItem {
+            currentItem.seek(to: kCMTimeZero)
+            self.player.advanceToNextItem()
+            self.player.insert(currentItem, after: nil)
+        }
+    }
+    
+    override class func keyPathsForValuesAffectingValue(forKey key: String) -> Set<String> {
+        let affectedKeyPathsMappingByKey: [String: Set<String>] = [
+            "rate":         [#keyPath(FilesViewController.player.rate)]
+        ]
+        
+        return affectedKeyPathsMappingByKey[key] ?? super.keyPathsForValuesAffectingValue(forKey: key)
+    }
+    
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        // Make sure the this KVO callback was intended for this view controller.
+        let ctx = context
+        guard ctx == &playerKVOContext else {
+            super.observeValue(forKeyPath: keyPath, of: object, change: change, context: ctx)
+            return
+        }
+        
+        if keyPath == #keyPath(FilesViewController.player.rate) {
+            let newRate = (change?[NSKeyValueChangeKey.newKey] as! NSNumber).doubleValue
+            guard player != nil else { return }
+
+            debugPrint("CURRENT RATE IS \(newRate)")
+            
+            if newRate == 0.0 {
+                
+                if let currentItem = player.currentItem {
+                    guard currentItem.currentTime() == currentItem.duration else { return }
+                    debugPrint("ENTERED LAST BLOCK")
+                    currentItem.seek(to: kCMTimeZero)
+                    self.player.advanceToNextItem()
+                    self.player.insert(currentItem, after: nil)
+                    
+                    self.player.play()
+                }
+            }
+        }
     }
     
     func present(_ controller: UIViewController) {

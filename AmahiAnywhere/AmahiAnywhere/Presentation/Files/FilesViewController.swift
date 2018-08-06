@@ -8,6 +8,7 @@
 
 import UIKit
 import Lightbox
+import AVFoundation
 
 class FilesViewController: BaseUIViewController {
     
@@ -21,12 +22,20 @@ class FilesViewController: BaseUIViewController {
     
     internal var fileSort = FileSort.modifiedTime
     
+    /*
+     KVO context used to differentiate KVO callbacks for this class versus other
+     classes in its class hierarchy.
+     */
+    internal var playerKVOContext = 0
+    
     // Mark - UIKit properties
     @IBOutlet var filesTableView: UITableView!
     internal var refreshControl: UIRefreshControl!
     internal var downloadProgressAlertController : UIAlertController?
     internal var progressView: UIProgressView?
     internal var docController: UIDocumentInteractionController?
+    
+    @objc internal var player: AVQueuePlayer!
     
     internal var isAlertShowing = false
     internal var presenter: FilesPresenter!
@@ -56,7 +65,7 @@ class FilesViewController: BaseUIViewController {
         presenter.loadOfflineFiles()
     }
     
-    @objc func handleLongPress(sender: UIGestureRecognizer){
+    @objc func handleLongPress(sender: UIGestureRecognizer) {
         
         let touchPoint = sender.location(in: filesTableView)
         if let indexPath = filesTableView.indexPathForRow(at: touchPoint) {
