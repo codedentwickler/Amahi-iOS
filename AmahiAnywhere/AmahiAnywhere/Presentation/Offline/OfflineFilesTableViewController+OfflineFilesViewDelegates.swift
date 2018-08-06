@@ -6,7 +6,9 @@
 //  Copyright © 2018 Amahi. All rights reserved.
 //
 
+import AVKit
 import Foundation
+import MediaPlayer
 
 extension OfflineFilesTableViewController : OfflineFilesView {
     
@@ -26,6 +28,24 @@ extension OfflineFilesTableViewController : OfflineFilesView {
         let videoPlayerVc = self.viewController(viewControllerClass: VideoPlayerViewController.self, from: StoryBoardIdentifiers.VIDEO_PLAYER)
         videoPlayerVc.mediaURL = url
         self.present(videoPlayerVc)
+    }
+    
+    func playAudio(_ items: [AVPlayerItem], startIndex: Int) {
+        
+        let avPlayerVC = AVPlayerViewController()
+        player = AVQueuePlayer(items: items)
+        player.actionAtItemEnd = .advance
+        avPlayerVC.player = player
+        
+        for item in items {
+            NotificationCenter.default.addObserver(self,
+                                                   selector: #selector(FilesViewController.nextAudio(notification:)),
+                                                   name: .AVPlayerItemDidPlayToEndTime, object: item)
+        }
+        
+        present(avPlayerVC, animated: true) {
+            self.player.play()
+        }
     }
     
     func shareFile(at url: URL, from sender : UIView? ) {

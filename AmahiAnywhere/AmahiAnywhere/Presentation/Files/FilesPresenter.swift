@@ -9,7 +9,6 @@
 import Foundation
 import Lightbox
 import CoreData
-import KDEAudioPlayer
 import AVFoundation
 
 internal protocol FilesView : BaseView {

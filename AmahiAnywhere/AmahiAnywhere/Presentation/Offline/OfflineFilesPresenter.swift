@@ -8,12 +8,14 @@
 
 import Foundation
 import Lightbox
-import KDEAudioPlayer
+import AVFoundation
 
 protocol OfflineFilesView : BaseView {    
     func present(_ controller: UIViewController)
     
     func playMedia(at url: URL)
+    
+    func playAudio(_ items: [AVPlayerItem], startIndex: Int)
     
     func webViewOpenContent(at url: URL, mimeType: MimeType)
     
@@ -61,8 +63,24 @@ class OfflineFilesPresenter: BasePresenter {
             break
             
         case MimeType.audio:
-            let player = AudioPlayer()
-            player.play(items: prepareAudioItems(files), startAtIndex: fileIndex)
+            let audioURLs = prepareAudioItems(files)
+            var arrangedURLs = [URL]()
+            
+            for (index, url) in audioURLs.enumerated() {
+                if (index < fileIndex) {
+                    arrangedURLs.insert(url, at: arrangedURLs.endIndex)
+                } else {
+                    arrangedURLs.insert(url, at: index - fileIndex)
+                }
+            }
+            
+            var playerItems = [AVPlayerItem]()
+            
+            for _ in 0..<6 {
+                arrangedURLs.forEach({playerItems.append(AVPlayerItem(url: $0))})
+            }
+            
+            self.view?.playAudio(playerItems, startIndex: fileIndex)
             break
             
         case MimeType.code, MimeType.presentation, MimeType.sharedFile, MimeType.document, MimeType.spreadsheet:
@@ -79,18 +97,16 @@ class OfflineFilesPresenter: BasePresenter {
         }
     }
     
-    private func prepareAudioItems(_ files: [OfflineFile]) -> [AudioItem] {
-        var audioItems = [AudioItem]()
+    private func prepareAudioItems(_ files: [OfflineFile]) -> [URL] {
+        var audioURLs = [URL]()
         
         for file in files {
             if (Mimes.shared.match(file.mime!) == MimeType.audio) {
                 let url = FileManager.default.localFilePathInDownloads(for: file)!
-                if let item = AudioItem(highQualitySoundURL: nil, mediumQualitySoundURL: url, lowQualitySoundURL: nil) {
-                    audioItems.append(item)
-                }
+                audioURLs.append(url)
             }
         }
-        return audioItems
+        return audioURLs
     }
     
     private func prepareImageArray(_ files: [OfflineFile]) -> [LightboxImage] {

@@ -7,12 +7,14 @@
 //
 
 import UIKit
+import AVFoundation
 import CoreData
 
 class OfflineFilesTableViewController : CoreDataTableViewController {
     
     internal var fileSort = OfflineFileSort.dateAdded
     internal var docController: UIDocumentInteractionController?
+    @objc internal var player: AVQueuePlayer!
     
     internal var presenter: OfflineFilesPresenter!
 
