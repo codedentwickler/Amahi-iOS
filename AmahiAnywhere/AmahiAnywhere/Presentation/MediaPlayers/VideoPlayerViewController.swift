@@ -145,8 +145,7 @@ class VideoPlayerViewController: UIViewController {
         }
     }
     
-    @objc func idleTimeExceded() {
-        
+    @objc func idleTimeExceded() {        
         idleTimer = nil
         
         if !videoControlsView.isHidden {
@@ -195,11 +194,13 @@ class VideoPlayerViewController: UIViewController {
     @IBAction func rewind(_ sender: Any) {
         mediaPlayer?.jumpBackward(VideoPlayerViewController.IntervalForFastRewindAndFastForward)
         self.showIndicator(imageView: rewindIndicator)
+        resetTimeAfterStateChanged()
     }
     
     @IBAction func forward(_ sender: Any) {
         mediaPlayer?.jumpForward(VideoPlayerViewController.IntervalForFastRewindAndFastForward)
         self.showIndicator(imageView: forwardIndicator)
+        resetTimeAfterStateChanged()
     }
     
     func showIndicator(imageView: UIImageView) {

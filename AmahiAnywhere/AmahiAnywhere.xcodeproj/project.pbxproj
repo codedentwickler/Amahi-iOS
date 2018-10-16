@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		04BA8996211D56F400E7A868 /* AmahiLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BA8995211D56F400E7A868 /* AmahiLogger.swift */; };
-		07A3AB2E5DFE0D2AD44B0F33 /* Pods_AmahiAnywhere.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5293AC0952F87B50DCD644D /* Pods_AmahiAnywhere.framework */; };
 		0AA5E185203F36DD0010FD47 /* Amahi Logo White Font.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AA5E184203F36DD0010FD47 /* Amahi Logo White Font.png */; };
 		4605963F204E24DF004FA066 /* ServerPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4605963E204E24DF004FA066 /* ServerPresenter.swift */; };
 		46059643204E8B41004FA066 /* BaseUITableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46059642204E8B41004FA066 /* BaseUITableViewController.swift */; };
@@ -75,6 +74,7 @@
 		FB71BE9D201CB2FC0005492C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB71BE9B201CB2FC0005492C /* Main.storyboard */; };
 		FB71BE9F201CB2FC0005492C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB71BE9E201CB2FC0005492C /* Assets.xcassets */; };
 		FB71BEA2201CB2FC0005492C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB71BEA0201CB2FC0005492C /* LaunchScreen.storyboard */; };
+		FDF272B8D1A118C6C4ABF3FD /* Pods_AmahiAnywhere.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5293AC0952F87B50DCD644D /* Pods_AmahiAnywhere.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -158,7 +158,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				07A3AB2E5DFE0D2AD44B0F33 /* Pods_AmahiAnywhere.framework in Frameworks */,
+				FDF272B8D1A118C6C4ABF3FD /* Pods_AmahiAnywhere.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -448,6 +448,7 @@
 				FB71BE91201CB2FC0005492C /* Frameworks */,
 				FB71BE92201CB2FC0005492C /* Resources */,
 				F61A594FE5268D2316515601 /* [CP] Embed Pods Frameworks */,
+				817E0DF4F8C1F80EAB834B3D /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -513,6 +514,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		817E0DF4F8C1F80EAB834B3D /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AmahiAnywhere/Pods-AmahiAnywhere-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		D37A02672BBEFF330A5E8AAE /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -782,14 +798,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 325LAYFA25;
+				DEVELOPMENT_TEAM = 44WM7BTB59;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = AmahiAnywhere/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.amahi.AmahiAnywhere;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.amahi.AmahiAnywhere-dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ENFORCE_EXCLUSIVE_ACCESS = none;
 				SWIFT_OBJC_BRIDGING_HEADER = "AmahiAnywhere/AmahiAnywhere-Bridging-Header.h";
@@ -804,14 +820,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 325LAYFA25;
+				DEVELOPMENT_TEAM = 44WM7BTB59;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = AmahiAnywhere/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.amahi.AmahiAnywhere;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.amahi.AmahiAnywhere-dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ENFORCE_EXCLUSIVE_ACCESS = none;
 				SWIFT_OBJC_BRIDGING_HEADER = "AmahiAnywhere/AmahiAnywhere-Bridging-Header.h";
