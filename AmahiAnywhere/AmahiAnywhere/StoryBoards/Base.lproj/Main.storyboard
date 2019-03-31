@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -359,10 +359,10 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TTN-mD-reG">
-                                                    <rect key="frame" x="65" y="0.0" width="306" height="60"/>
+                                                    <rect key="frame" x="65" y="0.0" width="306" height="59.5"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="bHg-fY-Kz5">
-                                                            <rect key="frame" x="0.0" y="0.0" width="281" height="60"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="281" height="59.5"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="File Name" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uj4-Xf-bZO" userLabel="File Name">
                                                                     <rect key="frame" x="0.0" y="0.0" width="281" height="30"/>
@@ -374,16 +374,16 @@
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="wm4-kA-Sue">
-                                                                    <rect key="frame" x="0.0" y="30" width="281" height="30"/>
+                                                                    <rect key="frame" x="0.0" y="30" width="281" height="29.5"/>
                                                                     <subviews>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Last Modified" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZeC-Rr-jMK">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="71.5" height="30"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="71.5" height="29.5"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                                             <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="right" horizontalHuggingPriority="251" verticalHuggingPriority="251" preservesSuperviewLayoutMargins="YES" text="File Size" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ieI-fH-KwJ">
-                                                                            <rect key="frame" x="237" y="0.0" width="44" height="30"/>
+                                                                            <rect key="frame" x="237" y="0.0" width="44" height="29.5"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                                             <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <nil key="highlightedColor"/>
@@ -397,18 +397,15 @@
                                                             </constraints>
                                                         </stackView>
                                                         <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" image="moreIcon" translatesAutoresizingMaskIntoConstraints="NO" id="p5Y-Ut-xNs">
-                                                            <rect key="frame" x="281" y="0.0" width="25" height="60"/>
+                                                            <rect key="frame" x="281" y="0.0" width="25" height="59.5"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="25" id="l8B-un-DdV"/>
                                                             </constraints>
                                                         </imageView>
                                                     </subviews>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="60" id="8c8-SW-npl"/>
-                                                    </constraints>
                                                 </stackView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="CeE-nc-RZT">
-                                                    <rect key="frame" x="12" y="7.5" width="45" height="45"/>
+                                                    <rect key="frame" x="8" y="7.5" width="45" height="45"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="45" id="7rx-PH-8qW"/>
                                                         <constraint firstAttribute="width" constant="45" id="XTN-aP-Qhc"/>
@@ -419,7 +416,7 @@
                                                 <constraint firstItem="TTN-mD-reG" firstAttribute="top" secondItem="dXc-bC-ZIk" secondAttribute="top" id="2th-0I-KoL"/>
                                                 <constraint firstItem="CeE-nc-RZT" firstAttribute="centerY" secondItem="dXc-bC-ZIk" secondAttribute="centerY" id="M0G-Ve-9ey"/>
                                                 <constraint firstAttribute="trailing" secondItem="TTN-mD-reG" secondAttribute="trailing" constant="4" id="MKD-aE-sMg"/>
-                                                <constraint firstItem="TTN-mD-reG" firstAttribute="leading" secondItem="CeE-nc-RZT" secondAttribute="trailing" constant="8" id="Ne1-gW-Lhf"/>
+                                                <constraint firstItem="TTN-mD-reG" firstAttribute="leading" secondItem="CeE-nc-RZT" secondAttribute="trailing" constant="12" id="Ne1-gW-Lhf"/>
                                                 <constraint firstItem="TTN-mD-reG" firstAttribute="centerY" secondItem="dXc-bC-ZIk" secondAttribute="centerY" id="ljS-nk-GIX"/>
                                                 <constraint firstItem="TTN-mD-reG" firstAttribute="leading" secondItem="dXc-bC-ZIk" secondAttribute="leadingMargin" constant="50" id="qWJ-2I-zxB"/>
                                             </constraints>
@@ -430,7 +427,7 @@
                                             <outlet property="fileSizeLabel" destination="ieI-fH-KwJ" id="yup-bT-HVd"/>
                                             <outlet property="lastModifiedLabel" destination="ZeC-Rr-jMK" id="A0w-nX-yQg"/>
                                             <outlet property="menuImageView" destination="p5Y-Ut-xNs" id="xws-ZQ-ju3"/>
-                                            <outlet property="thumbnailImage" destination="CeE-nc-RZT" id="Xjd-sD-MAg"/>
+                                            <outlet property="thumbnailImageView" destination="CeE-nc-RZT" id="Xjd-sD-MAg"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -683,13 +680,13 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d5q-NO-WP0">
-                                            <rect key="frame" x="66" y="0.0" width="305" height="60"/>
+                                            <rect key="frame" x="66" y="-0.5" width="305" height="60.5"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="mHY-kT-Nqd">
-                                                    <rect key="frame" x="0.0" y="0.0" width="280" height="60"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="280" height="60.5"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="File Name" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KCX-9v-CPH" userLabel="File Name">
-                                                            <rect key="frame" x="0.0" y="0.0" width="280" height="30"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="280" height="30.5"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="30" id="fYx-fT-p2i"/>
                                                             </constraints>
@@ -698,7 +695,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="OYV-eA-eaR">
-                                                            <rect key="frame" x="0.0" y="30" width="280" height="30"/>
+                                                            <rect key="frame" x="0.0" y="30.5" width="280" height="30"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Download Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dQg-vo-D2y">
                                                                     <rect key="frame" x="0.0" y="0.0" width="80" height="30"/>
@@ -749,7 +746,7 @@
                                                     </constraints>
                                                 </stackView>
                                                 <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" image="moreIcon" translatesAutoresizingMaskIntoConstraints="NO" id="v95-iy-2DV">
-                                                    <rect key="frame" x="280" y="0.0" width="25" height="60"/>
+                                                    <rect key="frame" x="280" y="0.0" width="25" height="60.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="25" id="nAY-Uz-caS"/>
                                                     </constraints>
@@ -760,10 +757,10 @@
                                             </constraints>
                                         </stackView>
                                         <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.0099999997764825821" translatesAutoresizingMaskIntoConstraints="NO" id="JUT-hC-fr7">
-                                            <rect key="frame" x="66" y="55.5" width="293" height="2"/>
+                                            <rect key="frame" x="9" y="55.5" width="350" height="2"/>
                                         </progressView>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dRd-gK-PCG">
-                                            <rect key="frame" x="13" y="7.5" width="45" height="45"/>
+                                            <rect key="frame" x="9" y="7.5" width="45" height="45"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="45" id="iKI-Nu-Y56"/>
                                                 <constraint firstAttribute="width" constant="45" id="wDq-Mg-f4A"/>
@@ -772,11 +769,10 @@
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="JUT-hC-fr7" firstAttribute="trailing" secondItem="CZ5-Ck-nLr" secondAttribute="trailingMargin" id="8Xn-Pz-xPW"/>
-                                        <constraint firstItem="d5q-NO-WP0" firstAttribute="leading" secondItem="dRd-gK-PCG" secondAttribute="trailing" constant="8" id="EYx-Yw-U4y"/>
-                                        <constraint firstItem="JUT-hC-fr7" firstAttribute="leading" secondItem="d5q-NO-WP0" secondAttribute="leading" id="NrD-0j-fOB"/>
+                                        <constraint firstItem="d5q-NO-WP0" firstAttribute="leading" secondItem="dRd-gK-PCG" secondAttribute="trailing" constant="12" id="EYx-Yw-U4y"/>
+                                        <constraint firstItem="JUT-hC-fr7" firstAttribute="leading" secondItem="dRd-gK-PCG" secondAttribute="leading" id="NrD-0j-fOB"/>
                                         <constraint firstItem="dRd-gK-PCG" firstAttribute="centerY" secondItem="CZ5-Ck-nLr" secondAttribute="centerY" id="Q1h-nV-hOq"/>
                                         <constraint firstAttribute="trailing" secondItem="d5q-NO-WP0" secondAttribute="trailing" constant="4" id="VRe-5b-QjY"/>
-                                        <constraint firstItem="d5q-NO-WP0" firstAttribute="top" secondItem="CZ5-Ck-nLr" secondAttribute="top" id="Ygq-8S-aEF"/>
                                         <constraint firstItem="d5q-NO-WP0" firstAttribute="centerY" secondItem="CZ5-Ck-nLr" secondAttribute="centerY" id="aHb-5H-aR4"/>
                                         <constraint firstAttribute="bottom" secondItem="JUT-hC-fr7" secondAttribute="bottom" constant="2" id="d9w-qZ-oQO"/>
                                         <constraint firstItem="d5q-NO-WP0" firstAttribute="leading" secondItem="CZ5-Ck-nLr" secondAttribute="leadingMargin" constant="50" id="zDN-4l-nSz"/>
@@ -790,7 +786,7 @@
                                     <outlet property="fileSizeLabel" destination="S1d-eT-Vpt" id="I0d-tZ-Aik"/>
                                     <outlet property="menuImageView" destination="v95-iy-2DV" id="5MS-xK-j1s"/>
                                     <outlet property="progressView" destination="JUT-hC-fr7" id="M7s-zH-bgv"/>
-                                    <outlet property="thumbnailImage" destination="dRd-gK-PCG" id="LRW-of-GUJ"/>
+                                    <outlet property="thumbnailImageView" destination="dRd-gK-PCG" id="DAq-M2-Iy3"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -806,9 +802,9 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Amahi Logo White Font.png" width="719" height="246"/>
-        <image name="brokenIcon" width="84" height="84"/>
-        <image name="hamburgerIcon" width="50" height="50"/>
+        <image name="Amahi Logo White Font.png" width="172.55999755859375" height="59"/>
+        <image name="brokenIcon" width="28" height="28"/>
+        <image name="hamburgerIcon" width="25" height="25"/>
         <image name="moreIcon" width="72" height="72"/>
     </resources>
 </document>
