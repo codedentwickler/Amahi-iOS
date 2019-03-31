@@ -6,7 +6,7 @@
 //  Copyright © 2018 Amahi. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class ServerFileTableViewCell: UITableViewCell {
     
@@ -37,42 +37,60 @@ class ServerFileTableViewCell: UITableViewCell {
 
         let type = Mimes.shared.match(serverFile.mime_type!)
         
+        let url = ServerApi.shared!.getFileUri(serverFile)
+        
         switch type {
             
         case MimeType.image:
-            thumbnailImageView.sd_setImage(with: URL(string: ServerApi.shared!.getFileUri(serverFile).absoluteString), placeholderImage: UIImage(named: "image"), options: .refreshCached)
+            thumbnailImageView.sd_setImage(with: url, placeholderImage: UIImage(named: "image"), options: .refreshCached)
             break
             
         case MimeType.video:
-            let url = URL(string: ServerApi.shared!.getFileUri(serverFile).absoluteString)!
-            
+
             if let image = VideoThumbnailGenerator.imageFromMemory(for: url) {
                 thumbnailImageView.image = image
             } else {
-                let image = VideoThumbnailGenerator().getThumbnail(url)
-                thumbnailImageView.image = image
+                thumbnailImageView.image = UIImage(named: "video")
+                DispatchQueue.global(qos: .background).async {
+                    let image = VideoThumbnailGenerator().getThumbnail(url)
+                    DispatchQueue.main.async {
+                        // Code to be executed on the main thread here
+                        self.thumbnailImageView.image = image
+                    }
+                }
             }
             break
             
         case MimeType.audio:
-            let url = URL(string: ServerApi.shared!.getFileUri(serverFile).absoluteString)!
             
             if let image = AudioThumbnailGenerator.imageFromMemory(for: url) {
                 thumbnailImageView.image = image
             } else {
-                let image = AudioThumbnailGenerator().getThumbnail(url)
-                thumbnailImageView.image = image
+                thumbnailImageView.image = UIImage(named: "audio")
+                DispatchQueue.global(qos: .background).async {
+                    let image = AudioThumbnailGenerator().getThumbnail(url)
+                    DispatchQueue.main.async {
+                        // Code to be executed on the main thread here
+                        self.thumbnailImageView.image = image
+                    }
+                }
             }
             break
             
         case MimeType.presentation, MimeType.document, MimeType.spreadsheet:
-            let url = URL(string: ServerApi.shared!.getFileUri(serverFile).absoluteString)!
-            
+
             if let image = PDFThumbnailGenerator.imageFromMemory(for: url) {
                 thumbnailImageView.image = image
             } else {
-                let image = PDFThumbnailGenerator().getThumbnail(url)
-                thumbnailImageView.image = image
+                thumbnailImageView.image = UIImage(named: "file")
+
+                DispatchQueue.global(qos: .background).async {
+                    let image = PDFThumbnailGenerator().getThumbnail(url)
+                    DispatchQueue.main.async {
+                        // Code to be executed on the main thread here
+                        self.thumbnailImageView.image = image
+                    }
+                }
             }
             
         default:

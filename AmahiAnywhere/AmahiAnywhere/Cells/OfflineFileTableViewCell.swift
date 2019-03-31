@@ -64,8 +64,14 @@ class OfflineFileTableViewCell: UITableViewCell {
             if let image = VideoThumbnailGenerator.imageFromMemory(for: url) {
                 thumbnailImageView.image = image
             } else {
-                let image = VideoThumbnailGenerator().getThumbnail(url)
-                thumbnailImageView.image = image
+                thumbnailImageView.image = UIImage(named: "video")
+                DispatchQueue.global(qos: .background).async {
+                    let image = VideoThumbnailGenerator().getThumbnail(url)
+                    DispatchQueue.main.async {
+                        // Code to be executed on the main thread here
+                        self.thumbnailImageView.image = image
+                    }
+                }
             }
             break
             
@@ -74,8 +80,14 @@ class OfflineFileTableViewCell: UITableViewCell {
             if let image = AudioThumbnailGenerator.imageFromMemory(for: url) {
                 thumbnailImageView.image = image
             } else {
-                let image = AudioThumbnailGenerator().getThumbnail(url)
-                thumbnailImageView.image = image
+                thumbnailImageView.image = UIImage(named: "audio")
+                DispatchQueue.global(qos: .background).async {
+                    let image = AudioThumbnailGenerator().getThumbnail(url)
+                    DispatchQueue.main.async {
+                        // Code to be executed on the main thread here
+                        self.thumbnailImageView.image = image
+                    }
+                }
             }
             break
             
@@ -84,8 +96,13 @@ class OfflineFileTableViewCell: UITableViewCell {
             if let image = PDFThumbnailGenerator.imageFromMemory(for: url) {
                 thumbnailImageView.image = image
             } else {
-                let image = PDFThumbnailGenerator().getThumbnail(url)
-                thumbnailImageView.image = image
+                DispatchQueue.global(qos: .background).async {
+                    let image = PDFThumbnailGenerator().getThumbnail(url)
+                    DispatchQueue.main.async {
+                        // Code to be executed on the main thread here
+                        self.thumbnailImageView.image = image
+                    }
+                }
             }
             
         default:

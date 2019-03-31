@@ -20,9 +20,8 @@ class VideoThumbnailGenerator: ThumbnailGenerator {
         
         assetImgGenerate.appliesPreferredTrackTransform = true
         
-        // Jump to the third (1/3) of the video and fetch the thumbnail from there (600 is the timescale and is a multiplier of 24fps, 25fps, 30fps..)
-        let time        : CMTime = CMTimeMakeWithSeconds(600, preferredTimescale: Int32(durationSeconds/3.0))
-        var img         : CGImage
+        let time : CMTime = CMTimeMakeWithSeconds(600, preferredTimescale: Int32(durationSeconds/3.0))
+        var img : CGImage
         do {
             img = try assetImgGenerate.copyCGImage(at: time, actualTime: nil)
             let frameImg: UIImage = UIImage(cgImage: img)
