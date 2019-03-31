@@ -9,25 +9,28 @@
 import UIKit
 import AVFoundation
 import QuartzCore
+import MediaPlayer
 
 class VideoPlayerViewController: UIViewController {
     
-    @IBOutlet weak var rootView: UIView!
-    @IBOutlet weak var movieView: UIView!
-    @IBOutlet weak var playButton: UIButton!
-    @IBOutlet weak var fastForwardButton: UIButton!
-    @IBOutlet weak var rewindButton: UIButton!
-    @IBOutlet weak var timeElapsedLabel: UILabel!
-    @IBOutlet weak var durationLabel: UILabel!
-    @IBOutlet weak var videoControlsView: UIView!
-    @IBOutlet weak var doneButton: UIButton!
-    @IBOutlet weak var rewindIndicator: UIImageView!
-    @IBOutlet weak var forwardIndicator: UIImageView!
-    @IBOutlet weak var timeSlider: UISlider!
+    @IBOutlet private weak var rootView: UIView!
+    @IBOutlet private weak var movieView: UIView!
+    @IBOutlet private weak var playButton: UIButton!
+    @IBOutlet private weak var fastForwardButton: UIButton!
+    @IBOutlet private weak var rewindButton: UIButton!
+    @IBOutlet private weak var timeElapsedLabel: UILabel!
+    @IBOutlet private weak var durationLabel: UILabel!
+    @IBOutlet private weak var videoControlsView: UIView!
+    @IBOutlet private weak var doneButton: UIButton!
+    @IBOutlet private weak var rewindIndicator: UIImageView!
+    @IBOutlet private weak var forwardIndicator: UIImageView!
+    @IBOutlet private weak var timeSlider: UISlider!
+    @IBOutlet private weak var volumeView: UIView!
+    @IBOutlet private weak var volumeLabel: UILabel!
     
     private var doubleTapGesture: UITapGestureRecognizer!
     private var tapGesture: UITapGestureRecognizer!
-
+    
     // Set the media url from the presenting Viewcontroller
     private var idleTimer: Timer?
     private var mediaPlayer: VLCMediaPlayer?
@@ -48,6 +51,9 @@ class VideoPlayerViewController: UIViewController {
         
         UIApplication.shared.statusBarStyle = .lightContent
         
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture))
+        movieView.addGestureRecognizer(panGesture)
+
         let videoControlsTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(resetScreenIdleTimer))
         videoControlsTapGestureRecognizer.cancelsTouchesInView = false
         videoControlsView.isUserInteractionEnabled = true
@@ -60,17 +66,62 @@ class VideoPlayerViewController: UIViewController {
         tapGesture = UITapGestureRecognizer(target: self, action:  #selector(userTouchScreen))
         tapGesture.delegate = self
         movieView.isUserInteractionEnabled = true
- 
+        
         movieView.addGestureRecognizer(doubleTapGesture)
         movieView.addGestureRecognizer(tapGesture)
-
+        
         listenForNotifications()
         setUpIndicatorLayers(imageView: rewindIndicator)
         setUpIndicatorLayers(imageView: forwardIndicator)
+        
+        MPRemoteCommandCenter.shared().togglePlayPauseCommand.addTarget(self, action: #selector(playandPause(_:)))
     }
+    
+    @objc func handlePanGesture(panGesture: UIPanGestureRecognizer) {
+        
+        // Adding the volume label to the view
+        self.movieView.addSubview(self.volumeView)
+        
+        // Dealing with panGesture's states
+        if panGesture.state == .began {
+            self.volumeView.alpha = 0.8
+        }
+        else if panGesture.state == .ended {
+            UIView.animate(withDuration: 1.8) {
+                self.volumeView.alpha = 0
+            }
+        }
+        else {
+            self.volumeView.alpha = 0.8
+        }
+        
+        // Finding the movement of the panGesture and updating the volume label
+        let speed = panGesture.velocity(in: self.view)
+        let vertical = abs(speed.y) > abs(speed.x)
+        if vertical == true {
+            if speed.y > 0 {
+                self.mediaPlayer?.audio.volume -= 2
+                volumeLabel.text = "Volume: \(abs((mediaPlayer?.audio.volume)!/2))"
+            }
+            else if speed.y < 0 {
+                mediaPlayer?.audio.volume = (mediaPlayer?.audio.volume)! + Int32(1)
+                volumeLabel.text = "Volume: \(abs((mediaPlayer?.audio.volume)!/2))"
+            }
+            else {
+                print("Ideal Pan Gesture//Volume Change")
+            }
+        }
+    }
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        volumeView.layer.cornerRadius = 10
+        volumeView.alpha = 0
+        
+        // Setting default volume
+        mediaPlayer?.audio.volume = Int32(125)
         
         mediaPlayer = VLCMediaPlayer()
         mediaPlayer?.delegate = self
@@ -89,6 +140,15 @@ class VideoPlayerViewController: UIViewController {
         keepScreenOn(enabled: true)
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        UIApplication.shared.beginReceivingRemoteControlEvents()
+        if canBecomeFirstResponder {
+            becomeFirstResponder()
+        }
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
@@ -103,12 +163,23 @@ class VideoPlayerViewController: UIViewController {
         keepScreenOn(enabled: false)
     }
     
-    func listenForNotifications() {
+    override func remoteControlReceived(with event: UIEvent?) {
+        
+        guard let event = event else { return }
+        
+        if event.type == UIEvent.EventType.remoteControl {
+            if event.subtype == .remoteControlPause || event.subtype == .remoteControlPlay {
+                playandPause(self)
+            }
+        }
+    }
+    
+    private func listenForNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(handleRouteChange(_:)),
                                                name: AVAudioSession.routeChangeNotification, object: nil)
     }
     
-    @objc func handleRouteChange(_ notification: Notification) {
+    @objc private func handleRouteChange(_ notification: Notification) {
         guard
             let userInfo = notification.userInfo,
             let reasonRaw = userInfo[AVAudioSessionRouteChangeReasonKey] as? NSNumber,
@@ -122,7 +193,7 @@ class VideoPlayerViewController: UIViewController {
         }
     }
     
-    func setUpIndicatorLayers(imageView: UIImageView) {
+    private func setUpIndicatorLayers(imageView: UIImageView) {
         
         imageView.layer.shadowColor = UIColor.softYellow.cgColor
         
@@ -139,13 +210,13 @@ class VideoPlayerViewController: UIViewController {
         imageView.alpha = 0.0 // Hide indicator when player opens
     }
     
-    func keepScreenOn(enabled: Bool) {
+    private func keepScreenOn(enabled: Bool) {
         UIApplication.shared.isIdleTimerDisabled = enabled
     }
     
-    @objc func resetScreenIdleTimer() {
+    @objc private func resetScreenIdleTimer() {
         AmahiLogger.log("resetScreenIdleTimer was called")
-
+        
         if idleTimer == nil {
             
             idleTimer = Timer.scheduledTimer(timeInterval: 3.0,
@@ -160,7 +231,7 @@ class VideoPlayerViewController: UIViewController {
         }
     }
     
-    @objc func idleTimeExceded() {
+    @objc private func idleTimeExceded() {
         AmahiLogger.log("idleTimeExceded was called")
         idleTimer = nil
         
@@ -170,8 +241,8 @@ class VideoPlayerViewController: UIViewController {
             
             UIView.animate(withDuration: 0.5, delay: 0.0, options: [],
                            animations: {
-                self.videoControlsView.alpha = 0.0
-                self.doneButton.alpha = 0.0
+                            self.videoControlsView.alpha = 0.0
+                            self.doneButton.alpha = 0.0
             }) { (completed) in
                 self.videoControlsView.isHidden = true
                 self.doneButton.isHidden = true
@@ -179,8 +250,7 @@ class VideoPlayerViewController: UIViewController {
         }
     }
     
-    @objc func doubleTapRecognized(_ recognizer: UITapGestureRecognizer?) {
-        
+    @objc private func doubleTapRecognized(_ recognizer: UITapGestureRecognizer?) {
         let touchPoint = recognizer?.location(in: movieView)
         
         let isRight =  touchPoint!.x > movieView.center.x
@@ -189,12 +259,11 @@ class VideoPlayerViewController: UIViewController {
         } else {
             rewind(nil)
         }
-        
     }
     
-    @objc func userTouchScreen() {
+    @objc private func userTouchScreen() {
         AmahiLogger.log("userTouchScreen was called")
-
+        
         if !videoControlsView.isHidden {
             videoControlsView.isHidden = true
             doneButton.isHidden = true
@@ -214,31 +283,31 @@ class VideoPlayerViewController: UIViewController {
         resetTimeAfterStateChanged()
     }
     
-    @objc func resetTimeAfterStateChanged() {
+    @objc private func resetTimeAfterStateChanged() {
         AmahiLogger.log("resetTimeAfterStateChanged was called")
         if mediaPlayer!.isPlaying {
             resetScreenIdleTimer()
         }
     }
     
-    @IBAction func rewind(_ sender: Any?) {
+    /// Rewinds the video player
+    ///
+    /// - Parameters:
+    ///     - sender: The view that triggered the call. if value is null, sender is the double tap gesture
+    @IBAction private func rewind(_ sender: Any?) {
         mediaPlayer?.jumpBackward(VideoPlayerViewController.IntervalForFastRewindAndFastForward)
         showIndicator(imageView: rewindIndicator)
-        if sender != nil {
-            resetTimeAfterStateChanged()
-            
-        }
     }
-    
-    @IBAction func forward(_ sender: Any?) {
+    /// Forwards the video player
+    ///
+    /// - Parameters:
+    ///     - sender: The view that triggered the call. if value is null, sender is the double tap gesture
+    ///
+    @IBAction private func forward(_ sender: Any?) {
         mediaPlayer?.jumpForward(VideoPlayerViewController.IntervalForFastRewindAndFastForward)
         showIndicator(imageView: forwardIndicator)
-        if sender != nil {
-            resetTimeAfterStateChanged()
-            
-        }    }
-    
-    func showIndicator(imageView: UIImageView) {
+    }
+    private func showIndicator(imageView: UIImageView) {
         
         imageView.layer.removeAllAnimations()
         imageView.alpha = 1.0
@@ -248,12 +317,22 @@ class VideoPlayerViewController: UIViewController {
         }, completion: nil)
     }
     
-    @IBAction func userClickDone(_ sender: Any) {
+    @IBAction private func userClickDone(_ sender: Any) {
         mediaPlayer?.stop()
         dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func playandPause(_ sender: Any) {
+    /// Toggles Play/Pause
+    ///
+    /// - Parameters:
+    ///     - sender: The view that triggered the call. if value is not a UIButton, then sender is from an headphone.
+    ///
+    @IBAction private func playandPause(_ sender: Any) {
+        AmahiLogger.log("playandPause was called ")
+
+        if !(sender is UIButton) {
+            userTouchScreen()
+        }
         if (mediaPlayer?.isPlaying)! {
             mediaPlayer?.pause()
             idleTimer?.invalidate()
@@ -263,7 +342,7 @@ class VideoPlayerViewController: UIViewController {
         }
     }
     
-    @IBAction func userChangedMediaPosition(_ sender: UISlider) {
+    @IBAction private func userChangedMediaPosition(_ sender: UISlider) {
         
         if hasMediaFileParseFinished {
             let newPosition = VLCTime.init(number: sender.value as NSNumber)
@@ -277,7 +356,7 @@ class VideoPlayerViewController: UIViewController {
         resetScreenIdleTimer()
     }
     
-    @objc func userTapScrobblePosition(_ tapGesture: UITapGestureRecognizer) {
+    @objc private func userTapScrobblePosition(_ tapGesture: UITapGestureRecognizer) {
         
         if timeSlider.isHighlighted {
             return
@@ -286,7 +365,7 @@ class VideoPlayerViewController: UIViewController {
         let percentage = point.x / timeSlider.bounds.size.width
         let delta = Float(percentage) * (timeSlider.maximumValue - timeSlider.minimumValue)
         let value = timeSlider.minimumValue + delta
-
+        
         timeSlider.setValue(value, animated: true)
         
         if !(mediaPlayer?.isPlaying)! {
@@ -296,7 +375,7 @@ class VideoPlayerViewController: UIViewController {
         userChangedMediaPosition(timeSlider)
     }
     
-    @IBAction func scrobblePositionTouchDown(_ sender: Any) {
+    @IBAction private func scrobblePositionTouchDown(_ sender: Any) {
         idleTimer?.invalidate()
         idleTimer = nil
     }
@@ -309,7 +388,7 @@ extension VideoPlayerViewController: VLCMediaPlayerDelegate {
         timeSlider.value = Float(truncating: (mediaPlayer?.time.value)!)
         timeElapsedLabel.text = mediaPlayer?.time.stringValue
         durationLabel.text = mediaPlayer?.media.length.stringValue
-
+        
         if !hasPlayStarted {
             hasPlayStarted = true
             resetScreenIdleTimer()
@@ -347,7 +426,8 @@ extension VideoPlayerViewController: VLCMediaPlayerDelegate {
 
 extension VideoPlayerViewController : UIGestureRecognizerDelegate {
     
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
+                           shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
     

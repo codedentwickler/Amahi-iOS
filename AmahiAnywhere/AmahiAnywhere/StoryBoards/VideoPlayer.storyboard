@@ -23,7 +23,33 @@
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xdE-qU-B5f">
                                         <rect key="frame" x="0.0" y="0.0" width="812" height="354"/>
+                                        <subviews>
+                                            <view alpha="0.80000000000000004" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3yJ-en-oBu">
+                                                <rect key="frame" x="709" y="35" width="95" height="25"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Volume: 75" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5L4-at-Ysz">
+                                                        <rect key="frame" x="0.0" y="0.0" width="95" height="25"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                                <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="95" id="Fcn-d5-oZV"/>
+                                                    <constraint firstAttribute="trailing" secondItem="5L4-at-Ysz" secondAttribute="trailing" id="YvY-kj-kNX"/>
+                                                    <constraint firstItem="5L4-at-Ysz" firstAttribute="leading" secondItem="3yJ-en-oBu" secondAttribute="leading" id="aA2-tI-iTS"/>
+                                                    <constraint firstAttribute="bottom" secondItem="5L4-at-Ysz" secondAttribute="bottom" id="lNY-sf-oXG"/>
+                                                    <constraint firstItem="5L4-at-Ysz" firstAttribute="top" secondItem="3yJ-en-oBu" secondAttribute="top" id="muo-TB-tzb"/>
+                                                    <constraint firstAttribute="height" constant="25" id="n3J-e1-lkj"/>
+                                                </constraints>
+                                            </view>
+                                        </subviews>
                                         <color key="backgroundColor" red="0.094117647060000004" green="0.094117647060000004" blue="0.094117647060000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstItem="3yJ-en-oBu" firstAttribute="top" secondItem="xdE-qU-B5f" secondAttribute="top" constant="35" id="Zw7-SQ-aXH"/>
+                                            <constraint firstAttribute="trailing" secondItem="3yJ-en-oBu" secondAttribute="trailing" constant="8" id="qey-il-9Cj"/>
+                                        </constraints>
                                     </view>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="fastRewindIcon" translatesAutoresizingMaskIntoConstraints="NO" id="QvY-Mo-eVr" userLabel="Rewind Image View">
                                         <rect key="frame" x="16" y="123" width="40" height="108"/>
@@ -195,6 +221,8 @@
                         <outlet property="timeElapsedLabel" destination="37w-J2-g45" id="qKQ-xq-VEK"/>
                         <outlet property="timeSlider" destination="cAB-QC-gop" id="3hw-au-7IU"/>
                         <outlet property="videoControlsView" destination="Px1-hZ-kQe" id="is9-8p-DYA"/>
+                        <outlet property="volumeLabel" destination="5L4-at-Ysz" id="n3L-6z-ONn"/>
+                        <outlet property="volumeView" destination="3yJ-en-oBu" id="vBK-Nn-oBn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jbP-4A-Sha" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -227,7 +255,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="812" height="354"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bvb-kH-hda">
-                                        <rect key="frame" x="155" y="211.66666666666666" width="41.666666666666657" height="20.333333333333343"/>
+                                        <rect key="frame" x="155" y="211.66666666666663" width="41.666666666666657" height="20.333333333333343"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
