@@ -13,5 +13,5 @@ use_frameworks!
     pod 'MobileVLCKit'
     pod 'Lightbox'
     pod 'ReachabilitySwift'
-    pod 'SDWebImage'
+    pod 'SDWebImage' ,'4.4.6'
 end
