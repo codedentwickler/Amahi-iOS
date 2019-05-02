@@ -100,6 +100,8 @@ internal class FilesPresenter: BasePresenter {
         
         let type = Mimes.shared.match(file.mime_type!)
         
+        AmahiLogger.log(": Matched type is \(type) , File MIMETYPE \(file.mime_type)")
+        
         switch type {
             
         case MimeType.image:
@@ -109,7 +111,7 @@ internal class FilesPresenter: BasePresenter {
             self.view?.present(controller)
             break
             
-        case MimeType.video:
+        case MimeType.video, MimeType.compressedMedia:
             // TODO: open VideoPlayer and play the file
             guard let url = ServerApi.shared!.getFileUri(file) else {
                 AmahiLogger.log("Invalid file URL, file cannot be opened")
@@ -122,7 +124,7 @@ internal class FilesPresenter: BasePresenter {
         case MimeType.audio:
             let audioURLs = prepareAudioItems(files)
             var arrangedURLs = [URL]()
-                
+
             for (index, url) in audioURLs.enumerated() {
                 if (index < fileIndex) {
                     arrangedURLs.insert(url, at: arrangedURLs.endIndex)
@@ -130,16 +132,16 @@ internal class FilesPresenter: BasePresenter {
                     arrangedURLs.insert(url, at: index - fileIndex)
                 }
             }
-            
+
             var playerItems = [AVPlayerItem]()
-            
+
             for _ in 0..<6 {
                 arrangedURLs.forEach({playerItems.append(AVPlayerItem(url: $0))})
             }
-            
+
             self.view?.playAudio(playerItems, startIndex: fileIndex)
             break
-            
+
         case MimeType.code, MimeType.presentation, MimeType.sharedFile, MimeType.document, MimeType.spreadsheet:
             if FileManager.default.fileExistsInCache(file){
                 let path = FileManager.default.localPathInCache(for: file)
