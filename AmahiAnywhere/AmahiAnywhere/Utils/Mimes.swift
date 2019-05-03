@@ -27,7 +27,7 @@ public class Mimes {
         types.updateValue(MimeType.archive, forKey: "application/x-rar-compressed")
         
         types.updateValue(MimeType.audio, forKey: "application/ogg")
-        types.updateValue(MimeType.audio, forKey: "application/x-flac")
+        types.updateValue(MimeType.compressedMedia, forKey: "application/x-flac")
         
         types.updateValue(MimeType.code, forKey: "text/css")
         types.updateValue(MimeType.code, forKey: "text/html")
@@ -44,10 +44,10 @@ public class Mimes {
         types.updateValue(MimeType.document, forKey: "application/x-abiword")
         types.updateValue(MimeType.document, forKey: "application/x-kword")
         types.updateValue(MimeType.document, forKey: "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
-
+        
         types.updateValue(MimeType.sharedFile, forKey: "application/epub+zip")
         types.updateValue(MimeType.sharedFile, forKey: "application/x-mobipocket")
-
+        
         types.updateValue(MimeType.directory, forKey: "text/directory")
         
         types.updateValue(MimeType.image, forKey: "application/vnd.oasis.opendocument.graphics")
@@ -69,14 +69,24 @@ public class Mimes {
     }
     
     public func match(_ mime: String) -> MimeType {
-    
+        
         let type = matchKnown(mime);
-    
+        
         if type != MimeType.undefined {
             return type;
         } else {
+            if isCompressedMedia(mime) {
+                return .compressedMedia
+            }
             return matchCategory(mime)
         }
+    }
+    
+    private func isCompressedMedia(_ mime: String) -> Bool {
+        let fileExtensionType = mime.split(separator: "/")[1]
+        
+        AmahiLogger.log("\(fileExtensionType)")
+        return fileExtensionType == "flac"
     }
     
     private func matchKnown(_ mime: String) -> MimeType {
@@ -88,22 +98,22 @@ public class Mimes {
     
     private func matchCategory(_ mime: String) -> MimeType {
         let type = mime.split(separator: "/")[0]
-    
+        
         switch type {
-            case "audio":
-                return MimeType.audio
-            case "image":
-                return MimeType.image
-            case "text":
-                return MimeType.document
-            case "video":
-                return MimeType.video
-            default:
-                return MimeType.undefined
+        case "audio":
+            return MimeType.audio
+        case "image":
+            return MimeType.image
+        case "text":
+            return MimeType.document
+        case "video":
+            return MimeType.video
+        default:
+            return MimeType.undefined
         }
     }
 }
 
 public enum MimeType: Int {
-    case undefined = 1, archive, audio, code, sharedFile, document, directory, image, presentation, spreadsheet, video, subtitle
+    case undefined = 1, archive, audio, code, sharedFile, document, directory, image, presentation, spreadsheet, video, subtitle , compressedMedia
 }
