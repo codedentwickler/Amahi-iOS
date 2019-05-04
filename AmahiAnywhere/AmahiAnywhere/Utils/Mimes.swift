@@ -27,7 +27,7 @@ public class Mimes {
         types.updateValue(MimeType.archive, forKey: "application/x-rar-compressed")
         
         types.updateValue(MimeType.audio, forKey: "application/ogg")
-        types.updateValue(MimeType.compressedMedia, forKey: "application/x-flac")
+        types.updateValue(MimeType.flacMedia, forKey: "application/x-flac")
         
         types.updateValue(MimeType.code, forKey: "text/css")
         types.updateValue(MimeType.code, forKey: "text/html")
@@ -75,17 +75,14 @@ public class Mimes {
         if type != MimeType.undefined {
             return type;
         } else {
-            if isCompressedMedia(mime) {
-                return .compressedMedia
-            }
+            
             return matchCategory(mime)
         }
     }
     
-    private func isCompressedMedia(_ mime: String) -> Bool {
+    private func isFlacMedia(_ mime: String) -> Bool {
         let fileExtensionType = mime.split(separator: "/")[1]
         
-        AmahiLogger.log("\(fileExtensionType)")
         return fileExtensionType == "flac"
     }
     
@@ -98,6 +95,10 @@ public class Mimes {
     
     private func matchCategory(_ mime: String) -> MimeType {
         let type = mime.split(separator: "/")[0]
+        
+        if isFlacMedia(mime) {
+            return .flacMedia
+        }
         
         switch type {
         case "audio":
@@ -115,5 +116,5 @@ public class Mimes {
 }
 
 public enum MimeType: Int {
-    case undefined = 1, archive, audio, code, sharedFile, document, directory, image, presentation, spreadsheet, video, subtitle , compressedMedia
+    case undefined = 1, archive, audio, code, sharedFile, document, directory, image, presentation, spreadsheet, video, subtitle , flacMedia
 }

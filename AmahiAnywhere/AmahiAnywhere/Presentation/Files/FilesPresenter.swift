@@ -111,7 +111,7 @@ internal class FilesPresenter: BasePresenter {
             self.view?.present(controller)
             break
             
-        case MimeType.video, MimeType.compressedMedia:
+        case MimeType.video, MimeType.flacMedia:
             // TODO: open VideoPlayer and play the file
             guard let url = ServerApi.shared!.getFileUri(file) else {
                 AmahiLogger.log("Invalid file URL, file cannot be opened")
