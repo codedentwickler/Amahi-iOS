@@ -27,6 +27,7 @@ public class Mimes {
         types.updateValue(MimeType.archive, forKey: "application/x-rar-compressed")
         
         types.updateValue(MimeType.audio, forKey: "application/ogg")
+        // breaking out flac on its own type because of https://github.com/amahi/ios/issues/172
         types.updateValue(MimeType.flacMedia, forKey: "application/x-flac")
         
         types.updateValue(MimeType.code, forKey: "text/css")
